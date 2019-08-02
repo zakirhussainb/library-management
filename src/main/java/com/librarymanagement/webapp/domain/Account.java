@@ -26,7 +26,7 @@ public class Account {
     @JoinColumn(name = "library_card_id")
     private LibraryCard libraryCard;
     private AccountType accountType;
-    private Date createdAt;
+    private Date createdAt = new Date();
 
 //    public boolean resetPassword();
 }

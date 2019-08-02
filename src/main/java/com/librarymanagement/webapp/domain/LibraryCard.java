@@ -14,7 +14,6 @@ public class LibraryCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cardNumber;
     private String barCode;
     private Date issuedAt;
     private boolean active;
