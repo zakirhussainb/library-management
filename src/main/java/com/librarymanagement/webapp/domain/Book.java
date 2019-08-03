@@ -4,13 +4,15 @@ package com.librarymanagement.webapp.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "book")
-public class Book {
+public class Book implements Serializable {
 
+    private static final Long serialVersionUID = -2343243243242432341L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +22,7 @@ public class Book {
     private String publisher;
     private String language;
     private int numberOfPages;
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private List<Author> authors;
 }

@@ -5,16 +5,22 @@ import com.librarymanagement.webapp.util.BookStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
+@Entity
 @Data
-public class BookItem {
+@Table(name = "book_item")
+public class BookItem implements Serializable {
+
+    private static final Long serialVersionUID = -2343243243242432341L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String barCode;
     private boolean isReferenceOnly;
-    private Date borrowed;
+    private Date borrowedDate;
     private Date dueDate;
     private double price;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,7 +28,9 @@ public class BookItem {
     private Book book;
     private BookFormat format;
     private BookStatus status;
-    private Date dateOfPurchase;
+    private Date purchasedDate;
     private Date publicationDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rack_id")
     private Rack placedAt;
 }
