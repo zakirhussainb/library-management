@@ -1,7 +1,8 @@
 package com.librarymanagement.webapp.service;
 
-import com.librarymanagement.webapp.domain.BookItem;
+import com.librarymanagement.webapp.domain.*;
 import com.librarymanagement.webapp.repository.BookItemRepository;
+import com.librarymanagement.webapp.util.BookStatus;
 import com.librarymanagement.webapp.util.LibUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import java.util.Optional;
 public class BookItemService {
     @Autowired
     private BookItemRepository repository;
-    @Autowired
     private static final LibUtility util = new LibUtility();
     @Autowired
     private BookService bookService;
@@ -48,4 +48,16 @@ public class BookItemService {
         return result.get();
     }
 
+    public BookItem findByBarCode(String barCode) {
+        Optional<BookItem> result = repository.findByBarCode(barCode);
+        if (!result.isPresent()) {
+            throw new IllegalArgumentException("BookItem is not present. Please check the book item id");
+        }
+        return result.get();
+    }
+
+    public void updateBookItemStatus(BookItem bookItem, BookStatus bookStatus) {
+        bookItem.setStatus(bookStatus);
+        repository.save(bookItem);
+    }
 }

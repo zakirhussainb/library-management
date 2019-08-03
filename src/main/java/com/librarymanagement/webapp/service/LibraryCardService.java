@@ -36,4 +36,12 @@ public class LibraryCardService {
         }
         return result.get();
     }
+
+    public LibraryCard findByBarCode(String barCode) {
+        Optional<LibraryCard> result = repository.findByBarCode(barCode);
+        if(!result.isPresent()){
+            throw new IllegalArgumentException("LibraryCard is not present. Please check the library card id");
+        }
+        return result.get();
+    }
 }

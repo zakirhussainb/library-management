@@ -1,6 +1,8 @@
 package com.librarymanagement.webapp.web.rest;
 
+import com.librarymanagement.webapp.domain.Account;
 import com.librarymanagement.webapp.domain.BookItem;
+import com.librarymanagement.webapp.domain.LibraryCard;
 import com.librarymanagement.webapp.service.BookItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,4 +39,5 @@ public class BookItemResource {
     private BookItem findOneById(@PathVariable Long id) {
         return bookItemService.findOneById(id);
     }
+
 }

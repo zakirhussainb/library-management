@@ -45,4 +45,17 @@ public class AccountService {
         }
         return account.get();
     }
+
+    public Account findAccountByLibraryCard(LibraryCard libraryCard) {
+        Optional<Account> account = repository.findByLibraryCard(libraryCard);
+        if(!account.isPresent()) {
+            throw new IllegalArgumentException("Account is not present. Please check the account id");
+        }
+        return account.get();
+    }
+
+    public void incrementTotalBooksCheckedOut(Account account, int numberOfBooksIssued) {
+        account.setBooksIssued(numberOfBooksIssued + 1);
+        repository.save(account);
+    }
 }
