@@ -27,5 +27,6 @@ public class Account implements Serializable {
     private LibraryCard libraryCard;
     private AccountType accountType;
     private Date createdAt = new Date();
+    private int booksIssued;
 
 }
