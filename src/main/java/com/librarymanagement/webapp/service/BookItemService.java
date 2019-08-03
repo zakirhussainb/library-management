@@ -17,6 +17,8 @@ public class BookItemService {
     private static final LibUtility util = new LibUtility();
     @Autowired
     private BookService bookService;
+    @Autowired
+    private RackService rackService;
 
     public BookItem createBookItem(BookItem bookItem) {
         BookItem newBookItem = new BookItem();
@@ -29,9 +31,9 @@ public class BookItemService {
         newBookItem.setStatus(bookItem.getStatus());
         newBookItem.setPurchasedDate(bookItem.getPurchasedDate());
         newBookItem.setPublicationDate(bookItem.getPublicationDate());
-        newBookItem.setPlacedAt(bookItem.getPlacedAt());
         newBookItem.setBook(bookService.createBook(bookItem.getBook()));
-        return repository.save(bookItem);
+        newBookItem.setRack(rackService.createRack(bookItem.getRack()));
+        return repository.save(newBookItem);
     }
 
     public List<BookItem> findAll() {
