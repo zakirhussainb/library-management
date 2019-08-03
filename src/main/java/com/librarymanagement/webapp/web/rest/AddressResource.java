@@ -17,17 +17,6 @@ public class AddressResource {
     @Autowired
     private AddressService service;
 
-    @PostMapping("/address/create")
-    private ResponseEntity<Void> createAddress(@RequestBody Address newAddress) {
-        Address address = service.createAddress(newAddress);
-        if(address == null) {
-            return ResponseEntity.noContent().build();
-        }
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(address.getId()).toUri();
-        return ResponseEntity.created(location).build();
-    }
-
     @GetMapping("/address/all")
     private List<Address> listAllAddress() {
         return service.listAllAddress();

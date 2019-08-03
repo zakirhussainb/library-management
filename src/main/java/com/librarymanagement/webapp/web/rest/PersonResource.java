@@ -19,17 +19,6 @@ public class PersonResource {
     @Autowired
     private PersonService service;
 
-    @PostMapping("/person/create")
-    private ResponseEntity<Void> createPerson(@RequestBody Person newPerson) {
-        Person person = service.createPerson(newPerson);
-        if(person == null) {
-            return ResponseEntity.noContent().build();
-        }
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(person.getId()).toUri();
-        return ResponseEntity.created(location).build();
-    }
-
     @GetMapping("/person/all")
     private List<Person> findAll() {
         return service.findAll();

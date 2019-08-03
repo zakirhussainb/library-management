@@ -22,12 +22,12 @@ public class AccountResource {
     }
 
     @PostMapping("/account/create")
-    public ResponseEntity<Void> createAccount(@RequestBody Account newAccount) {
-        Account account = service.createAccount(newAccount);
-        if(account == null)
+    public ResponseEntity<Void> createAccount(@RequestBody Account account) {
+        Account newAccount = service.createAccount(account);
+        if(newAccount == null)
             return ResponseEntity.noContent().build();
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(account.getId()).toUri();
+                .buildAndExpand(newAccount.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
