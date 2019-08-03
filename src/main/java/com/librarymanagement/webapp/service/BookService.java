@@ -13,10 +13,18 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorService authorService;
 
     public Book createBook(Book book) {
         Book newBook = new Book();
-        newBook.setAuthors(book.getAuthors());
+        newBook.setIsbn(book.getIsbn());
+        newBook.setTitle(book.getTitle());
+        newBook.setSubject(book.getSubject());
+        newBook.setPublisher(book.getPublisher());
+        newBook.setLanguage(book.getLanguage());
+        newBook.setNumberOfPages(book.getNumberOfPages());
+        newBook.setAuthors(authorService.createAuthor(book.getAuthors()));
         return bookRepository.save(book);
     }
 
