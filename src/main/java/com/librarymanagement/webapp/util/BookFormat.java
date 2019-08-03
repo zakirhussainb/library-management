@@ -4,7 +4,7 @@ public enum BookFormat {
     HARDCOVER,
     PAPERBACK,
     AUDIO_BOOK,
-    EBOOK,
+    E_BOOK,
     NEWSPAPER,
     MAGAZINE,
     JOURNAL

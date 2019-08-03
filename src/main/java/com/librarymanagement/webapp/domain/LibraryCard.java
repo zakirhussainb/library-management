@@ -3,12 +3,13 @@ package com.librarymanagement.webapp.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "library_card")
-public class LibraryCard {
+public class LibraryCard implements Serializable {
 
     private static final Long serialVersionUID = -2343243243242432341L;
     @Id

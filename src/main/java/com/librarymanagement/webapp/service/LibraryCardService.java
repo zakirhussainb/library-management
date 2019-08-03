@@ -19,7 +19,7 @@ public class LibraryCardService {
 
     public LibraryCard createLibraryCard() {
         LibraryCard libraryCard = new LibraryCard();
-        libraryCard.setBarCode(util.getUUID());
+        libraryCard.setBarCode(util.generateBarcode());
         libraryCard.setActive(true);
         libraryCard.setIssuedAt(new Date());
         return repository.save(libraryCard);

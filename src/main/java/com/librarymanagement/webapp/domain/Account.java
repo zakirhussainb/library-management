@@ -5,12 +5,13 @@ import com.librarymanagement.webapp.util.AccountType;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable {
 
     private static final Long serialVersionUID = -2343243243242432341L;
     @Id
@@ -21,12 +22,10 @@ public class Account {
     @OneToOne
     @JoinColumn(name = "person_id")
     private Person person;
-//    @OneToOne(targetEntity = LibraryCard.class, mappedBy = "account", fetch = FetchType.EAGER)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "library_card_id")
     private LibraryCard libraryCard;
     private AccountType accountType;
     private Date createdAt = new Date();
 
-//    public boolean resetPassword();
 }
