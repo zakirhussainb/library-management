@@ -17,9 +17,16 @@ public class PersonService {
 
     @Autowired
     private PersonRepository repository;
+    @Autowired
+    private AddressService addressService;
 
     public Person createPerson(Person person) {
-        return repository.save(person);
+        Person newPerson = new Person();
+        newPerson.setName(person.getName());
+        newPerson.setEmail(person.getEmail());
+        newPerson.setPhone(person.getPhone());
+        newPerson.setAddress(addressService.createAddress(person.getAddress()));
+        return repository.save(newPerson);
     }
 
     public Person findPersonById(Long id) {

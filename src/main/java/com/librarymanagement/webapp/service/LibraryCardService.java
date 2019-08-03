@@ -6,6 +6,7 @@ import com.librarymanagement.webapp.util.LibUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,15 @@ public class LibraryCardService {
 
     @Autowired
     private LibraryCardRepository repository;
+    private static final LibUtility util = new LibUtility();
+
+    public LibraryCard createLibraryCard() {
+        LibraryCard libraryCard = new LibraryCard();
+        libraryCard.setBarCode(util.getUUID());
+        libraryCard.setActive(true);
+        libraryCard.setIssuedAt(new Date());
+        return repository.save(libraryCard);
+    }
 
     public List<LibraryCard> findAll() {
         return repository.findAll();
