@@ -2,6 +2,7 @@ package com.librarymanagement.webapp.service;
 
 import com.librarymanagement.webapp.domain.*;
 import com.librarymanagement.webapp.repository.BookItemRepository;
+import com.librarymanagement.webapp.util.BookItemStatus;
 import com.librarymanagement.webapp.util.BookStatus;
 import com.librarymanagement.webapp.util.LibUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class BookItemService {
         return result.get();
     }
 
-    public void updateBookItemStatus(BookItem bookItem, BookStatus bookStatus) {
+    public void updateBookItemStatus(BookItem bookItem, BookItemStatus bookStatus) {
         bookItem.setStatus(bookStatus);
         repository.save(bookItem);
     }

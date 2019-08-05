@@ -1,6 +1,7 @@
 package com.librarymanagement.webapp.domain;
 
 import com.librarymanagement.webapp.util.BookFormat;
+import com.librarymanagement.webapp.util.BookItemStatus;
 import com.librarymanagement.webapp.util.BookStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,7 @@ public class BookItem implements Serializable {
     @JoinColumn(name = "book_id")
     private Book book;
     private BookFormat format;
-    private BookStatus status;
+    private BookItemStatus status;
     private Date purchasedDate;
     private Date publicationDate;
     @ManyToOne(fetch = FetchType.LAZY)

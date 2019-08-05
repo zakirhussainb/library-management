@@ -29,4 +29,15 @@ public class BookTransactionResource {
                 .buildAndExpand(bookTransaction.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @PostMapping("/bookTransaction/returnBook")
+    private ResponseEntity<Void> returnBook(@RequestBody BarCodeReader barCodeReader) {
+        BookTransaction bookTransaction = service.returnBook(barCodeReader);
+        if(bookTransaction == null) {
+            return ResponseEntity.noContent().build();
+        }
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(bookTransaction.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
 }
