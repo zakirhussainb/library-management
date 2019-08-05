@@ -14,7 +14,7 @@ public class BookTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date createdDate = new Date();
-    private Long bookItemId;
-    private Long accountId;
+    private Long bookItemId;//elasticsearch
+    private Long accountId;//postgres
 
 }

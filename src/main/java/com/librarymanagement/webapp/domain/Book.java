@@ -1,6 +1,7 @@
 package com.librarymanagement.webapp.domain;
 
 
+import com.librarymanagement.webapp.util.BookStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,7 +23,5 @@ public class Book implements Serializable {
     private String publisher;
     private String language;
     private int numberOfPages;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private List<Author> authors;
+    private BookStatus status;
 }

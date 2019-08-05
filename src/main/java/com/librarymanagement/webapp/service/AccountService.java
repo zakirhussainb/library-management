@@ -58,4 +58,9 @@ public class AccountService {
         account.setBooksIssued(numberOfBooksIssued + 1);
         repository.save(account);
     }
+
+    public void decrementTotalBooksCheckedOut(Account account, int numberOfBooksIssued) {
+        account.setBooksIssued(numberOfBooksIssued - 1);
+        repository.save(account);
+    }
 }

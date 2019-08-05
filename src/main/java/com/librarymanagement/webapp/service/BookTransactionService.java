@@ -2,10 +2,14 @@ package com.librarymanagement.webapp.service;
 
 import com.librarymanagement.webapp.domain.*;
 import com.librarymanagement.webapp.repository.BookTransactionRepository;
+import com.librarymanagement.webapp.util.BookItemStatus;
 import com.librarymanagement.webapp.util.BookStatus;
 import com.librarymanagement.webapp.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class BookTransactionService {
@@ -27,7 +31,7 @@ public class BookTransactionService {
         LibraryCard newLibraryCard = libraryCardService.findByBarCode(barCodeReader.getLibraryCardBarCode());
         Account account = accountService.findAccountByLibraryCard(newLibraryCard);
         BookItem bookItem = bookItemService.findByBarCode(barCodeReader.getBookItemBarCode());
-        if(bookItem.getStatus() == BookStatus.AVAILABLE) {
+        if(bookItem.getStatus() == BookItemStatus.AVAILABLE) {
             return issueBookItemToAccount(account, bookItem);
         } else {
             throw new Error("The book item " + bookItem.getBook().getTitle() + " cannot be issued to " + account.getPerson().getName());
@@ -43,8 +47,38 @@ public class BookTransactionService {
         bookTransaction.setAccountId(account.getId());
         bookTransaction.setBookItemId(bookItem.getId());
         accountService.incrementTotalBooksCheckedOut(account, numberOfBooksIssued);
-        bookItemService.updateBookItemStatus(bookItem, BookStatus.LOANED);
+        bookItemService.updateBookItemStatus(bookItem, BookItemStatus.LOANED);
         return repository.save(bookTransaction);
+    }
+
+    public BookTransaction returnBook(BarCodeReader barCodeReader) {
+        LibraryCard newLibraryCard = libraryCardService.findByBarCode(barCodeReader.getLibraryCardBarCode());
+        Account account = accountService.findAccountByLibraryCard(newLibraryCard);
+        BookItem bookItem = bookItemService.findByBarCode(barCodeReader.getBookItemBarCode());
+        if(bookItem.getStatus() == BookItemStatus.LOANED) {
+            return returnBookItemToLibrary(bookItem);
+        } else {
+            throw new Error("The book item " + bookItem.getBook().getTitle() + " cannot be issued to " + account.getPerson().getName());
+        }
+    }
+
+    private BookTransaction returnBookItemToLibrary(BookItem bookItem) {
+        BookTransaction bookTransaction = findByBookItemId(bookItem.getId());
+        Account account = accountService.findAccountById(bookTransaction.getAccountId());
+        int numberOfBooksIssued = account.getBooksIssued();
+        Date currentDate = new Date();
+        if(currentDate.compareTo(bookItem.getDueDate()) <= 0) {
+            accountService.decrementTotalBooksCheckedOut(account, numberOfBooksIssued);
+        }
+        return bookTransaction;
+    }
+
+    private BookTransaction findByBookItemId(Long id) {
+        Optional<BookTransaction> result = repository.findByBookItemId(id);
+        if(!result.isPresent()) {
+            throw new IllegalArgumentException("No Book Transaction found");
+        }
+        return result.get();
     }
 
     /*private void reserveBookItemToAccount(BarCodeReader barCodeReader) {

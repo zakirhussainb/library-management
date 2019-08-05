@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface BookTransactionRepository extends JpaRepository<BookTransaction, Long> {
     Optional<BookTransaction> findByAccountIdAndBookItemId(Long accountId, Long bookItemId);
+
+    Optional<BookTransaction> findByBookItemId(Long id);
 }
