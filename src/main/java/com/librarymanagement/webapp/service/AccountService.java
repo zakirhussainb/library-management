@@ -2,6 +2,7 @@ package com.librarymanagement.webapp.service;
 
 import com.librarymanagement.webapp.domain.Account;
 import com.librarymanagement.webapp.domain.LibraryCard;
+import com.librarymanagement.webapp.domain.Person;
 import com.librarymanagement.webapp.repository.AccountRepository;
 import com.librarymanagement.webapp.repository.LibraryCardRepository;
 import com.librarymanagement.webapp.util.LibUtility;
@@ -25,6 +26,10 @@ public class AccountService {
     private static final LibUtility util = new LibUtility();
 
     public Account createAccount(Account account) {
+        Optional<Account> account1 = findByPerson(account.getPerson());
+        if(account1.isPresent()) {
+            return account1.get();
+        }
         Account newAccount = new Account();
         newAccount.setPerson(personService.createPerson(account.getPerson()));
         newAccount.setLibraryCard(libraryCardService.createLibraryCard());
@@ -32,6 +37,10 @@ public class AccountService {
         newAccount.setStatus(account.getStatus());
         newAccount.setAccountType(account.getAccountType());
         return repository.save(newAccount);
+    }
+
+    private Optional<Account> findByPerson(Person person) {
+        return repository.findByPerson(person);
     }
 
     public List<Account> listAllAccounts() {

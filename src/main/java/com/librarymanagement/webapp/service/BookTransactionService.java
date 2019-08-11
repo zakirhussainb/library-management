@@ -3,12 +3,12 @@ package com.librarymanagement.webapp.service;
 import com.librarymanagement.webapp.domain.*;
 import com.librarymanagement.webapp.repository.BookTransactionRepository;
 import com.librarymanagement.webapp.util.BookItemStatus;
-import com.librarymanagement.webapp.util.BookStatus;
 import com.librarymanagement.webapp.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,6 +79,24 @@ public class BookTransactionService {
             throw new IllegalArgumentException("No Book Transaction found");
         }
         return result.get();
+    }
+
+    public BookTransaction reserveBook(LibraryCard libraryCard, Book book) {
+        Account account = accountService.findAccountByLibraryCard(libraryCard);
+        List<BookItem> availableBookItems = bookItemService.findAllByStatusAndBook(BookItemStatus.AVAILABLE, book);
+        if(availableBookItems.size() < 1) {
+            throw new Error("Sorry the book you requested cannot be reserved");
+        }
+        BookItem bookItem = availableBookItems.get(0);
+        BookTransaction bookTransaction = new BookTransaction();
+        bookTransaction.setBookItemId(bookItem.getId());
+        bookTransaction.setAccountId(account.getId());
+        bookTransaction.setReserved(true);
+        return createBookTransaction(bookTransaction);
+    }
+
+    public BookTransaction createBookTransaction(BookTransaction bookTransaction) {
+        return repository.save(bookTransaction);
     }
 
     /*private void reserveBookItemToAccount(BarCodeReader barCodeReader) {

@@ -17,15 +17,23 @@ public class BookService {
     private AuthorService authorService;
 
     public Book createBook(Book book) {
-        Book newBook = new Book();
-        newBook.setIsbn(book.getIsbn());
-        newBook.setTitle(book.getTitle());
-        newBook.setSubject(book.getSubject());
-        newBook.setPublisher(book.getPublisher());
-        newBook.setLanguage(book.getLanguage());
-        newBook.setNumberOfPages(book.getNumberOfPages());
-        newBook.setAuthors(authorService.createAuthor(book.getAuthors()));
-        return bookRepository.save(book);
+        Optional<Book> newBook = findByTitle(book.getTitle());
+        if(newBook.isPresent()) {
+            return newBook.get();
+        }
+        Book resultBook =  new Book();
+        resultBook.setIsbn(book.getIsbn());
+        resultBook.setTitle(book.getTitle());
+        resultBook.setSubject(book.getSubject());
+        resultBook.setPublisher(book.getPublisher());
+        resultBook.setLanguage(book.getLanguage());
+        resultBook.setNumberOfPages(book.getNumberOfPages());
+        resultBook.setAuthors(authorService.createAuthor(book.getAuthors()));
+        return bookRepository.save(resultBook);
+    }
+
+    private Optional<Book> findByTitle(String bookTitle) {
+        return bookRepository.findByTitle(bookTitle);
     }
 
     public List<Book> findAll() {
