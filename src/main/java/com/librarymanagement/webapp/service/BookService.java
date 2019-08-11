@@ -17,10 +17,10 @@ public class BookService {
     private AuthorService authorService;
 
     public Book createBook(Book book) {
-        Optional<Book> newBook = findByTitle(book.getTitle());
+        /*Optional<Book> newBook = findByTitle(book.getTitle());
         if(newBook.isPresent()) {
             return newBook.get();
-        }
+        }*/
         Book resultBook =  new Book();
         resultBook.setIsbn(book.getIsbn());
         resultBook.setTitle(book.getTitle());

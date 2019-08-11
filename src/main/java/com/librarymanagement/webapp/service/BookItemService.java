@@ -21,10 +21,10 @@ public class BookItemService {
     private RackService rackService;
 
     public BookItem createBookItem(BookItem bookItem) {
-        Optional<BookItem> bookItem1 = isBookItemExists(bookItem.getBarCode());
+        /*Optional<BookItem> bookItem1 = isBookItemExists(bookItem.getBarCode());
         if(bookItem1.isPresent()) {
             return bookItem1.get();
-        }
+        }*/
         BookItem newBookItem = new BookItem();
         newBookItem.setBarCode(util.generateBarcode());
         newBookItem.setReferenceOnly(bookItem.isReferenceOnly());

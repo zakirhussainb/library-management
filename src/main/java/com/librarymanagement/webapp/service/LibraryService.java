@@ -17,10 +17,10 @@ public class LibraryService {
     private AddressService addressService;
 
     public Library createLibrary(Library library) {
-        Optional<Library> library1 = findByAddress(library.getAddress());
+        /*Optional<Library> library1 = findByAddress(library.getAddress());
         if(library1.isPresent()) {
             return library1.get();
-        }
+        }*/
         Library newLibrary = new Library();
         newLibrary.setName(library.getName());
         newLibrary.setAddress(addressService.createAddress(library.getAddress()));
