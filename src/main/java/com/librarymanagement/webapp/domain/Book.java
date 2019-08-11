@@ -1,12 +1,11 @@
 package com.librarymanagement.webapp.domain;
 
 
-import com.librarymanagement.webapp.util.BookStatus;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
@@ -23,5 +22,9 @@ public class Book implements Serializable {
     private String publisher;
     private String language;
     private int numberOfPages;
-    private BookStatus status;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Type(type = "com.librarymanagement.webapp.util.GenericArrayUserType")
+    @OrderColumn(name = "authors_index")
+    @JoinColumn(name = "author_id")
+    private Author[] authors;
 }

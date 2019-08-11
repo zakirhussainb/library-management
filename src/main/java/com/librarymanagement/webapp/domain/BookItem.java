@@ -2,10 +2,7 @@ package com.librarymanagement.webapp.domain;
 
 import com.librarymanagement.webapp.util.BookFormat;
 import com.librarymanagement.webapp.util.BookItemStatus;
-import com.librarymanagement.webapp.util.BookStatus;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;

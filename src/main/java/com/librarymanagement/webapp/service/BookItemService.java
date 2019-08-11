@@ -3,7 +3,6 @@ package com.librarymanagement.webapp.service;
 import com.librarymanagement.webapp.domain.*;
 import com.librarymanagement.webapp.repository.BookItemRepository;
 import com.librarymanagement.webapp.util.BookItemStatus;
-import com.librarymanagement.webapp.util.BookStatus;
 import com.librarymanagement.webapp.util.LibUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,10 @@ public class BookItemService {
     private RackService rackService;
 
     public BookItem createBookItem(BookItem bookItem) {
+        Optional<BookItem> bookItem1 = isBookItemExists(bookItem.getBarCode());
+        if(bookItem1.isPresent()) {
+            return bookItem1.get();
+        }
         BookItem newBookItem = new BookItem();
         newBookItem.setBarCode(util.generateBarcode());
         newBookItem.setReferenceOnly(bookItem.isReferenceOnly());
@@ -57,8 +60,16 @@ public class BookItemService {
         return result.get();
     }
 
+    public Optional<BookItem> isBookItemExists(String barCode) {
+        return repository.findByBarCode(barCode);
+    }
+
     public void updateBookItemStatus(BookItem bookItem, BookItemStatus bookStatus) {
         bookItem.setStatus(bookStatus);
         repository.save(bookItem);
+    }
+
+    public List<BookItem> findAllByStatusAndBook(BookItemStatus available, Book book) {
+        return repository.findAllByStatusAndBookTitle(available, book.getTitle());
     }
 }

@@ -17,7 +17,4 @@ public class Author implements Serializable {
     private Long id;
     private String name;
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
-    private List<Book> book;
 }

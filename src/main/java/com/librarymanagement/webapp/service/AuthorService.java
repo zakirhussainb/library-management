@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AuthorService {
@@ -14,11 +16,11 @@ public class AuthorService {
     @Autowired
     private AuthorRepository repository;
 
-    public List<Author> createAuthor(List<Author> authorList) {
-        List<Author> newAuthorList = new ArrayList<>();
-        for(Author author : authorList) {
-            newAuthorList.add(repository.save(author));
+    public Author[] createAuthor(Author[] authors) {
+        Author[] authorArr = new Author[authors.length];
+        for(int i = 0; i < authors.length; i++) {
+            authorArr[i] = repository.save(authors[i]);
         }
-        return newAuthorList;
+        return authorArr;
     }
 }

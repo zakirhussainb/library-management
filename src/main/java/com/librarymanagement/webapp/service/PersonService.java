@@ -1,5 +1,6 @@
 package com.librarymanagement.webapp.service;
 
+import com.librarymanagement.webapp.domain.Address;
 import com.librarymanagement.webapp.domain.LibraryCard;
 import com.librarymanagement.webapp.domain.Person;
 import com.librarymanagement.webapp.repository.LibraryCardRepository;
@@ -21,12 +22,20 @@ public class PersonService {
     private AddressService addressService;
 
     public Person createPerson(Person person) {
+        /*Optional<Person> person1 = findByAddress(person.getAddress());
+        if(person1.isPresent()) {
+            return person1.get();
+        }*/
         Person newPerson = new Person();
         newPerson.setName(person.getName());
         newPerson.setEmail(person.getEmail());
         newPerson.setPhone(person.getPhone());
         newPerson.setAddress(addressService.createAddress(person.getAddress()));
         return repository.save(newPerson);
+    }
+
+    private Optional<Person> findByAddress(Address address) {
+        return repository.findByAddress(address);
     }
 
     public Person findPersonById(Long id) {

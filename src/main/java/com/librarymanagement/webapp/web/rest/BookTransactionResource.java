@@ -40,4 +40,15 @@ public class BookTransactionResource {
                 .buildAndExpand(bookTransaction.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @PostMapping("/bookTransaction/reserveBook")
+    private ResponseEntity<Void> reserveBook(@RequestBody LibraryCard libraryCard, @RequestBody Book book) {
+        BookTransaction bookTransaction = service.reserveBook(libraryCard, book);
+        if(bookTransaction == null) {
+            return ResponseEntity.noContent().build();
+        }
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(bookTransaction.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
 }

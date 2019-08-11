@@ -16,5 +16,6 @@ public class BookTransaction {
     private Date createdDate = new Date();
     private Long bookItemId;//elasticsearch
     private Long accountId;//postgres
+    private boolean reserved;
 
 }
