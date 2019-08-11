@@ -17,10 +17,10 @@ public class RackService {
     private LibraryService libraryService;
 
     public Rack createRack(Rack rack) {
-        Optional<Rack> rack1 = findByLocationIdentifier(rack.getLocationIdentifier());
+        /*Optional<Rack> rack1 = findByLocationIdentifier(rack.getLocationIdentifier());
         if(rack1.isPresent()) {
             return rack1.get();
-        }
+        }*/
         Rack newRack = new Rack();
         newRack.setNumber(rack.getNumber());
         newRack.setLocationIdentifier(rack.getLocationIdentifier());

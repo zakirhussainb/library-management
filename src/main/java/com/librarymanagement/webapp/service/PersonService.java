@@ -22,9 +22,9 @@ public class PersonService {
     private AddressService addressService;
 
     public Person createPerson(Person person) {
-        /*Optional<Person> person1 = findByAddress(person.getAddress());
-        if(person1.isPresent()) {
-            return person1.get();
+        /*Optional<Address> address1 = addressService.findByStreetAddress(person.getAddress().getStreetAddress());
+        if(address1.isPresent()) {
+            return findByAddress(address1.get()).get();
         }*/
         Person newPerson = new Person();
         newPerson.setName(person.getName());
@@ -34,7 +34,7 @@ public class PersonService {
         return repository.save(newPerson);
     }
 
-    private Optional<Person> findByAddress(Address address) {
+    public Optional<Person> findByAddress(Address address) {
         return repository.findByAddress(address);
     }
 
