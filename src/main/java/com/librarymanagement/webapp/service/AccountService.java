@@ -26,10 +26,10 @@ public class AccountService {
     private static final LibUtility util = new LibUtility();
 
     public Account createAccount(Account account) {
-        Optional<Account> account1 = findByPerson(account.getPerson());
+        /*Optional<Account> account1 = findByPerson(account.getPerson());
         if(account1.isPresent()) {
             return account1.get();
-        }
+        }*/
         Account newAccount = new Account();
         newAccount.setPerson(personService.createPerson(account.getPerson()));
         newAccount.setLibraryCard(libraryCardService.createLibraryCard());

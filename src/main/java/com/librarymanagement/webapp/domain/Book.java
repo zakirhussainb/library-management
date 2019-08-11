@@ -25,5 +25,6 @@ public class Book implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY)
     @Type(type = "com.librarymanagement.webapp.util.GenericArrayUserType")
     @OrderColumn(name = "authors_index")
+    @JoinColumn(name = "author_id")
     private Author[] authors;
 }
